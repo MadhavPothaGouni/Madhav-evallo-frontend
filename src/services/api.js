@@ -1,9 +1,14 @@
 import axios from 'axios';
 
+// Prefer environment variable (Vercel) and fall back to local server
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL
+  baseURL: API_BASE,
 });
 
+// Attach token for all requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
